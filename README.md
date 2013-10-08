@@ -1,7 +1,7 @@
 Minigal Nano++
 ==============
 
-This project is a fork of [Mingal Nano SSE](https://github.com/sebsauvage/MinigalNano) (see below).
+This project is a fork of [Mingal Nano SSE](https://github.com/sebsauvage/MinigalNano).
 It's optimized for free.fr personal pages.
 
 Installation
@@ -22,14 +22,16 @@ Adding comments to your gallery and images
 
 * Create a simple text file named `metadata.txt` in the gallery's folder. For free.fr, the file must be encoded in ANSI.
  * Add gallery's name : __title|My great gallery__
- * Add gallery's comment : Not implemented yet.
+ * Add gallery's comment : __title|My great gallery@My comment__
  * Add image's title and comment : __image.jpg|The title::The caption__ (image.jpg must be the name of your image)
 
+*__The caracters | (pipe) and @ are reserved for the application.__
+
 * For example :
-title|Les chiens héhé...
+`title|Les chiens héhé...@Pleins de chiens.
 1.jpg|Chien endormi::kikinoué
 2.jpg|Snaps::joue à la baballe
-3.jpg|Spark:: le cleps
+3.jpg|Spark:: le cleps`
 
 Thumbnails
 =========

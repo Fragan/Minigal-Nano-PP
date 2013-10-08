@@ -54,6 +54,7 @@ $exif_data = "";
 $messages = "";
 $comment = "";
 $directory = "";
+$comment_gallery = "";
 
 //-----------------------
 // PHP ENVIRONMENT CHECK
@@ -436,11 +437,12 @@ if (file_exists($comment_filepath))
 }
 //--------------------------------------
 // GET THE OPTIONAL NAME OF THE GALLERY
+// AND COMMENTS
 //--------------------------------------
 		// If folder doesn't contain file comment.html
 		// Read the optionnal image title and caption in txt file (metadata.txt one file by folder (utf8 sans BOM or ANSI for free.fr))
-		// Format: title::title
-		// Example: title|Gallery #1.
+		// Format: title|title@comments
+		// Example: title|Gallery #1.@Moment of glory
 		// If file is not provided, folder will be used instead.
 if( $comment=="")
 {		
@@ -458,9 +460,19 @@ if( $comment=="")
 				$img_captions[$img_filename] = $img_caption;
 				if($img_filename=="title")
 				{
-					$directory = utf8_encode($img_caption);
-					$aa="false";
-					break;
+					$direct = utf8_encode($img_caption);
+					if(preg_match("#@#", $direct))
+					{
+						$director = explode("@", $direct);
+						$directory = $director[0];
+						$comment_gallery = $director[1];
+					}
+					else
+					{
+						$directory = utf8_encode($img_caption);
+					}
+						$aa="false";
+						break;
 				}
 			}
 		}
@@ -506,6 +518,7 @@ if( $comment=="")
 		$template = preg_replace("/<% version %>/", "$version", $template);
 		$template = preg_replace("/<% mail %>/", "$mail", $template);
 		$template = preg_replace("/<% directory %>/", "$directory", $template);
+		$template = preg_replace("/<% comment_gallery %>/", "$comment_gallery", $template);
 		echo "$template";
 	}
 
