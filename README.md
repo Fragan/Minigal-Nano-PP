@@ -27,11 +27,11 @@ Adding comments to your gallery and images
 
 *__The caracters | (pipe) and @ are reserved for the application.__
 
-* For example :
-`title|Les chiens héhé...@Pleins de chiens.
-1.jpg|Chien endormi::kikinoué
-2.jpg|Snaps::joue à la baballe
-3.jpg|Spark:: le cleps`
+* For example :<br>
+title|Les chiens héhé...@Pleins de chiens.<br>
+1.jpg|Chien endormi::kikinoué<br>
+2.jpg|Snaps::joue à la baballe<br>
+3.jpg|Spark:: le cleps<br>
 
 Thumbnails
 =========
