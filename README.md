@@ -20,7 +20,7 @@ Adding your photos
 Adding comments to your gallery and images
 ==========================================
 
-* Create a simple text file named `metadata.txt` in the gallery's folder. For free.fr, the file must be encoded in ANSI.
+* Create a simple text file named `metadata.txt` in the gallery's folder. For free.fr, the file must be encoded in ANSI or ISO-8859-1.
  * Add gallery's name : __title|My great gallery__
  * Add gallery's comment : __title|My great gallery@My comment__
  * Add image's title and comment : __image.jpg|The title::The caption__ (image.jpg must be the name of your image)
