@@ -1,2 +1,24 @@
 photos/
 thumbs/
+
+*.class
+*.project
+*.settings/
+*.classpath
+**target/
+
+*.metadata/*
+
+# Package Files #
+*.war
+*.ear
+
+.waf-*
+.lock-*
+*/target/*
+*~
+*.project
+*bin/*
+*.DS_Store
+*.nja
+*.buildpath
