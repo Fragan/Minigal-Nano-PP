@@ -1,5 +1,6 @@
 photos/
 thumbs/
+static/
 
 *.class
 *.project
