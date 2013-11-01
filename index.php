@@ -132,6 +132,10 @@ function checkpermissions($file) {
 	if (substr(decoct(fileperms($file)), -1, strlen(fileperms($file))) < 4 OR substr(decoct(fileperms($file)), -3,1) < 4) $messages = "At least one file or folder has wrong permissions. Learn how to <a href='http://minigal.dk/faq-reader/items/how-do-i-change-file-permissions-chmod.html' target='_blank'>set file permissions</a>";
 }
 
+function emptyLineFilter($var) {
+	return ($var != "\n");
+}
+
 //-----------------------
 // CHECK FOR NEW VERSION
 //-----------------------
@@ -248,14 +252,18 @@ if (file_exists($currentdir ."/captions.txt"))
 							{	
 								$line_of_text = fgets($file_handle);
 								$parts = explode('/n', $line_of_text);
+								$parts = array_filter($parts, "emptyLineFilter");
 								foreach($parts as $img_capts)
 								{
-									list($img_filename, $img_caption) = explode('|', $img_capts);	
-									$img_captions[$img_filename] = $img_caption;
-									// if the photo's name is found in metadata.txt
-									if($img_filename==$file)
+									if (!empty($img_capts))
 									{
-										$img_captions[$file] = $img_caption;
+										list($img_filename, $img_caption) = explode('|', $img_capts);	
+										$img_captions[$img_filename] = $img_caption;
+										// if the photo's name is found in metadata.txt
+										if($img_filename==$file)
+										{
+											$img_captions[$file] = $img_caption;
+										}
 									}
 								}
 							}
