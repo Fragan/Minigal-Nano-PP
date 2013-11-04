@@ -19,7 +19,7 @@
 	document.oncontextmenu = new Function("return false");
 </script>
 </head>
-	<body ondragstart="return false;" ondrop="return false;">
+<body ondragstart="return false;" ondrop="return false;">
 	<div id="header">
 		<div id="avatar">
 			<a onClick="alert('pas de lien...')"><img src="images/avatar_80.jpg" style="width: 80px; height: 80px;"></a>
@@ -44,6 +44,8 @@
 	</div>
 	<br />
 	<div id="page_nav"><% page_navigation %></div>
+	<br />
+	<div id="bottom_page"><a href="#top" STYLE="text-decoration: none">&#8593; <% top_page %></a></div>
 	<br />
 	<div class="backlink" align="center">
 		<font color="grey"><a href="<% mail %>">Contact</font></a><br /> <a

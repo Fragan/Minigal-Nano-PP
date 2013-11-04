@@ -81,6 +81,15 @@ img {
 	text-align: center;
 }
 
+#bottom_page {
+	color: #484848;
+	clear: both;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+	text-align: center;
+	font: 90% "Trebuchet MS";
+}
+
 #page_nav a:link,#page_nav a:visited,#page_nav a:hover,#page_nav a:visited:hover
 	{
 	text-decoration: none;

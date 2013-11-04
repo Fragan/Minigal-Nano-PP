@@ -22,6 +22,7 @@ $backgroundcolor 		= "white"; //This provides a quick way to change your gallery
 $templatefile 			= "darkgold2"; //Template filename (must be placed in 'templates' folder)
 $title 					= "My great gallery"; // Text to be displayed in browser titlebar
 $author 				= "The boss";
+$top_page				= "Top of page";
 $mail                   = "mailto:the.boss@my-site.com";
 $folder_color 			= "black"; // Color of folder icons: blue / black / vista / purple / green / grey
 $sorting_folders		= "name"; // Sort folders by: [name][date]

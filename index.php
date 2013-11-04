@@ -131,7 +131,6 @@ function checkpermissions($file) {
 	global $messages;
 	if (substr(decoct(fileperms($file)), -1, strlen(fileperms($file))) < 4 OR substr(decoct(fileperms($file)), -3,1) < 4) $messages = "At least one file or folder has wrong permissions. Learn how to <a href='http://minigal.dk/faq-reader/items/how-do-i-change-file-permissions-chmod.html' target='_blank'>set file permissions</a>";
 }
-
 function emptyLineFilter($var) {
 	return ($var != "\n");
 }
@@ -524,6 +523,7 @@ if( $comment=="")
 		$template = preg_replace("/<% bgcolor %>/", "$backgroundcolor", $template);
 		$template = preg_replace("/<% gallery_width %>/", "$gallery_width", $template);
 		$template = preg_replace("/<% version %>/", "$version", $template);
+		$template = preg_replace("/<% top_page %>/", "$top_page", $template);
 		$template = preg_replace("/<% mail %>/", "$mail", $template);
 		$template = preg_replace("/<% directory %>/", "$directory", $template);
 		$template = preg_replace("/<% comment_gallery %>/", "$comment_gallery", $template);
