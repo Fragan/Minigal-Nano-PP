@@ -41,6 +41,6 @@ $label_loading 			= "Loading..."; //Thumbnail loading text
 
 //ADVANCED SETTINGS
 $thumb_size 			= 320; //Thumbnail height/width (square thumbs). Changing this will most likely require manual altering of the template file to make it look properly! 
-$label_max_length 		= 40; //Maximum chars of a folder name that will be displayed on the folder thumbnail  
+$label_max_length 		= 60; //Maximum chars of a folder name that will be displayed on the folder thumbnail  
 $display_exif			= 0;
 ?>

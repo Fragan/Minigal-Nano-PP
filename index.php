@@ -38,7 +38,7 @@ by Sébastien SAUVAGE.
 */
 
 // header('Content-Type: text/html; charset=utf-8'); // We use UTF-8 for proper international characters handling.
-$version = "0.3.7";
+$version = "0.4.0";
 ini_set("memory_limit","256M");
 
 require("config.php");
