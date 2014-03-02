@@ -24,9 +24,11 @@
 //-----------------------
 // Debug stuff
 //-----------------------
-//	error_reporting(E_ERROR);
-//	error_reporting(E_ALL);
-error_reporting(-1);
+        ini_set('display_errors', 'On');
+	error_reporting(E_ERROR);
+	error_reporting(E_ALL);
+//error_reporting(-1);
+        
 /*
   $mtime = microtime();
   $mtime = explode(" ",$mtime);
@@ -35,7 +37,7 @@ error_reporting(-1);
  */
 
 // header('Content-Type: text/html; charset=utf-8'); // We use UTF-8 for proper international characters handling.
-$version = "0.4.0";
+$version = "0.5.0";
 ini_set("memory_limit", "256M");
 
 require("config.php");
@@ -69,6 +71,7 @@ function is_directory($filepath) {
     if (!@opendir($filepath))
         return FALSE;
     else {
+//        closedir($filepath);
         return TRUE;
         closedir($filepath);
     }
@@ -78,9 +81,9 @@ function padstring($name, $length) {
     global $label_max_length;
     if (!isset($length))
         $length = $label_max_length;
-    if (strlen($name) > $length) {
+    if (strlen($name) > $length)
         return substr($name, 0, $length) . "...";
-    } else
+    else
         return $name;
 }
 
@@ -106,6 +109,7 @@ function readEXIF($file) {
     $emodel = $exif_idf0['Model'];
 
     $efocal = $exif_idf0['FocalLength'];
+//    list($x, $y) = preg_split('/', $efocal); // TODO: see why IFD0 in $ort = $exif['IFD0']['Orientation']; statement in createthumb fail with preg_split
     list($x, $y) = split('/', $efocal);
     $efocal = round($x / $y, 0);
 
@@ -113,6 +117,7 @@ function readEXIF($file) {
     $eexposuretime = $exif_exif['ExposureTime'];
 
     $efnumber = $exif_exif['FNumber'];
+//    list($x, $y) = preg_split('/', $efnumber);
     list($x, $y) = split('/', $efnumber);
     $efnumber = round($x / $y, 0);
 
@@ -175,7 +180,8 @@ $currentdir = GALLERY_ROOT . $thumbdir;
 //-----------------------
 $files = array();
 $dirs = array();
-if ($handle = opendir($currentdir)) {
+if (is_directory($currentdir) && $handle = opendir($currentdir)) {
+//if ($handle = opendir($currentdir)) { TODO:REMOVE
     while (false !== ($file = readdir($handle))) {
 // 1. LOAD FOLDERS
         if (is_directory($currentdir . "/" . $file)) {
@@ -223,10 +229,6 @@ if ($handle = opendir($currentdir)) {
         }
 
 // 3. LOAD FILES
-
-
-
-
         if ($file != "." && $file != ".." && $file != "folder.jpg") {
             // JPG, GIF and PNG
             if (preg_match("/.jpg$|.gif$|.png$/i", $file)) {
@@ -268,11 +270,19 @@ if ($handle = opendir($currentdir)) {
                 // if (is_file($currentdir.'/'.$file.'.html')) { $img_captions[$file] = $file.'::'.htmlspecialchars(file_get_contents($currentdir.'/'.$file.'.html'),ENT_QUOTES); }
                 // if (is_file($currentdir.'/'.$file.'.html')) { $img_captions[$file] = file_get_contents($currentdir.'/'.$file.'.html'); }
 
-                $files[] = array(
-                    "name" => $file,
-                    "date" => filemtime($currentdir . "/" . $file),
-                    "size" => filesize($currentdir . "/" . $file),
-                    "html" => "<li><a href='" . $currentdir . "/" . $file . "' rel='lightbox[billeder]' title=\"" . htmlentities($img_captions[$file]) . "\"><span></span><img src='" . GALLERY_ROOT . "createthumb.php?filename=" . $thumbdir . "/" . $file . "&amp;size=$thumb_size' alt='$label_loading' /></a></li>");
+                if ($lazyload) {
+                    $files[] = array(
+                        "name" => $file,
+                        "date" => filemtime($currentdir . "/" . $file),
+                        "size" => filesize($currentdir . "/" . $file),
+                        "html" => "<li><a href='" . $currentdir . "/" . $file . "' rel='lightbox[billeder]' title=\"" . htmlentities($img_captions[$file]) . "\"><img class=\"b-lazy\" src=data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw== data-src='" . GALLERY_ROOT . "createthumb.php?filename=" . $thumbdir . "/" . $file . "&amp;size=$thumb_size' alt='$label_loading' /></a></li>");
+                } else {
+                    $files[] = array(
+                        "name" => $file,
+                        "date" => filemtime($currentdir . "/" . $file),
+                        "size" => filesize($currentdir . "/" . $file),
+                        "html" => "<li><a href='" . $currentdir . "/" . $file . "' rel='lightbox[billeder]' title=\"" . htmlentities($img_captions[$file]) . "\"><span></span><img src='" . GALLERY_ROOT . "createthumb.php?filename=" . $thumbdir . "/" . $file . "&amp;size=$thumb_size' alt='$label_loading' /></a></li>");
+                }
             }
 
             // Other filetypes
@@ -348,6 +358,7 @@ $offset_end = $offset_start + $thumbs_pr_page;
 if ($offset_end > sizeof($dirs) + sizeof($files))
     $offset_end = sizeof($dirs) + sizeof($files);
 
+//if ($_GET["page"] == "all" || $lazyload) {
 if ($_GET["page"] == "all") {
     $offset_start = 0;
     $offset_end = sizeof($dirs) + sizeof($files);
@@ -356,7 +367,8 @@ if ($_GET["page"] == "all") {
 //-----------------------
 // PAGE NAVIGATION
 //-----------------------
-if (sizeof($dirs) + sizeof($files) > $thumbs_pr_page) {
+if (!$lazyload && sizeof($dirs) + sizeof($files) > $thumbs_pr_page) {
+//if (sizeof($dirs) + sizeof($files) > $thumbs_pr_page) { TODO: REMOVE
     $page_navigation .= "$label_page ";
     for ($i = 1; $i <= ceil((sizeof($files) + sizeof($dirs)) / $thumbs_pr_page); $i++) {
         if ($_GET["page"] == $i)
