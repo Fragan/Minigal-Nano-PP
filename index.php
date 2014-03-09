@@ -37,7 +37,7 @@
  */
 
 // header('Content-Type: text/html; charset=utf-8'); // We use UTF-8 for proper international characters handling.
-$version = "0.5.0";
+$version = "0.6.0";
 ini_set("memory_limit", "256M");
 
 require("config.php");
@@ -109,17 +109,17 @@ function readEXIF($file) {
     $emodel = $exif_idf0['Model'];
 
     $efocal = $exif_idf0['FocalLength'];
-//    list($x, $y) = preg_split('/', $efocal); // TODO: see why IFD0 in $ort = $exif['IFD0']['Orientation']; statement in createthumb fail with preg_split
-    list($x, $y) = split('/', $efocal);
-    $efocal = round($x / $y, 0);
-
+    //Next is only cosmectic need but give an error due to division by zero		
+    //list($x,$y) = preg_split('/', $efocal);
+    //$efocal = round($x/$y,0);
+    
     $exif_exif = exif_read_data($file, 'EXIF', 0);
     $eexposuretime = $exif_exif['ExposureTime'];
 
     $efnumber = $exif_exif['FNumber'];
-//    list($x, $y) = preg_split('/', $efnumber);
-    list($x, $y) = split('/', $efnumber);
-    $efnumber = round($x / $y, 0);
+    //Next is only cosmectic need but give an error due to division by zero		
+    //list($x,$y) = preg_split('/', $efocal);
+    //$efocal = round($x/$y,0);
 
     $eiso = $exif_exif['ISOSpeedRatings'];
 
@@ -207,7 +207,7 @@ if (is_directory($currentdir) && $handle = opendir($currentdir)) {
                         $dirs[] = array(
                             "name" => $file,
                             "date" => filemtime($currentdir . "/" . $file),
-                            "html" => "<li><a href='?dir=" . ltrim($requestedDir . "/" . $file, "/") . "'><em>" . padstring($file) . "</em><span></span><img src='" . GALLERY_ROOT . "images/folder_" . strtolower($folder_color) . ".png' width='$thumb_size' height='$thumb_size' alt='$label_loading' /></a></li>");
+                            "html" => "<li><a href='?dir=" . ltrim($requestedDir . "/" . $file, "/") . "'><em>" . padstring($file, $label_max_length) . "</em><span></span><img src='" . GALLERY_ROOT . "images/folder_" . strtolower($folder_color) . ".png' width='$thumb_size' height='$thumb_size' alt='$label_loading' /></a></li>");
                     }
                 }
             }
@@ -234,8 +234,16 @@ if (is_directory($currentdir) && $handle = opendir($currentdir)) {
             if (preg_match("/.jpg$|.gif$|.png$/i", $file)) {
 
                 //Read EXIF
-                if ($display_exif == 1)
-                    $img_captions[$file] .= readEXIF($currentdir . "/" . $file);
+//                if ($display_exif == 1)
+//                    $img_captions[$file] .= readEXIF($currentdir . "/" . $file);
+                if ($display_exif == 1) {
+                    $exifReaden = readEXIF($currentdir . "/" . $file);
+                    //Add to the caption all the EXIF information
+                    $img_captions[$file] = $file . $exifReaden;
+                } else {
+                    //If no EXIF, just use the filename as caption
+                    $img_captions[$file] = $file;
+                }
 
                 // Read the optionnal image title and caption in html file (image.jpg --> image.jpg.html)
                 // Format: title::caption
@@ -243,7 +251,7 @@ if (is_directory($currentdir) && $handle = opendir($currentdir)) {
                 // If file is not provided, image filename will be used instead.
                 checkpermissions($currentdir . "/" . $file);
 
-                $img_captions[$file] = $file;
+//                $img_captions[$file] = $file;
                 if (file_exists($currentdir . "/metadata.txt")) {
                     // Read the optionnal image title and caption in txt file (metadata.txt one file by folder (utf8 sans BOM or ANSI for free.fr) you can add the whole optional title and captation in this file, one line by photo)
                     // Format: image.jpg|title::caption
