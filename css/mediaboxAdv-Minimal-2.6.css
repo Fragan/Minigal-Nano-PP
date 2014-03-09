@@ -45,7 +45,7 @@
 }
 
 #mbCenter.mbLoading {
-	background: rgba(0,0,0,0.4) url(loading-minimal.gif) no-repeat center;
+	background: rgba(0,0,0,0.4) url(../images/loading-minimal.gif) no-repeat center;
 }
 
 #mbMedia {

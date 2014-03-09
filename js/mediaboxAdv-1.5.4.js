@@ -93,7 +93,7 @@ var Mediabox;
 				keyboardAlpha: false,			// Adds 'x', 'c', 'p', and 'n' when keyboard control is also set to true
 				keyboardStop: false,			// Stops all default keyboard actions while overlay is open (such as up/down arrows)
 												// Does not apply to iFrame content, does not affect mouse scrolling
-				overlayOpacity: 0.8,			// 1 is opaque, 0 is completely transparent (change the color in the CSS file)
+				overlayOpacity: 0.9,			// 1 is opaque, 0 is completely transparent (change the color in the CSS file)
 				resizeOpening: true,			// Determines if box opens small and grows (true) or starts at larger size (false)
 				resizeDuration: 240,			// Duration of each of the box resize animations (in milliseconds)
 				initialWidth: 320,				// Initial width of the box (in pixels)
