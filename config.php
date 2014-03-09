@@ -29,7 +29,7 @@
     $sorting_files			= "name"; // Sort files by: [name][date][size]
     $sortdir_folders		= "ASC"; // Sort direction of folders: [ASC][DESC]
     $sortdir_files			= "ASC"; // Sort direction of files: [ASC][DESC]
-    $lazyload				= 1; // 0 = pagination, 1 = display all pictures on one page.
+    $lazyload				= 1; // 0 = pagination (eager load), 1 = display all pictures on one page (lazy load).
 
     //LANGUAGE STRINGS
     $label_home 			= "Home"; //Name of home link in breadcrumb navigation
