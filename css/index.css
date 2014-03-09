@@ -241,7 +241,7 @@ a {
 	background: grey;
 	color: black;
 }
-/*
+
 footer {
 	clear:both;
 	padding-top: 2rem;
@@ -252,7 +252,7 @@ footer a {
 	text-decoration: none;
 	color: #666;
 }
-----Back to top button---
+// ----Back to top button---
 #backtop {
 	display: block;
 	position: fixed;
@@ -266,7 +266,7 @@ footer a {
 	-webkit-box-shadow:  0px 0px 2px -1px #000;
 	box-shadow:  0px 0px 2px -1px #000;
 }
-----lazyloading---
+// ----lazyloading---
 .loader{
 	background: url('images/loader.gif') center center no-repeat;
 }
@@ -276,7 +276,7 @@ footer a {
 .b-lazy.b-loaded {
 	opacity: 1;
 }
-----responsive----
+// ----responsive----
 #gallery li {
 	width: 24%;
 	height: 0;
@@ -299,4 +299,4 @@ footer a {
 		width: 100%;
 		padding-bottom: 100%;
 	}
-}*/
+}
