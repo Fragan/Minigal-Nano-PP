@@ -43,10 +43,7 @@ var Mediabox;
 		);
 
 		container = new Element("div", {id: "mbContainer"}).inject(center, "inside");
-			media = new Element("div", {id: "mbMedia"}).inject(container, "inside").adopt(
-                mediaLeft = new Element("a", {id: "mbMediaLeft", href: "#"}).addEvent("click", previous),
-                mediaRight = new Element("a", {id: "mbMediaRight", href: "#"}).addEvent("click", next)
-            );
+			media = new Element("div", {id: "mbMedia"}).inject(container, "inside");
 		bottom = new Element("div", {id: "mbBottom"}).inject(center, "inside").adopt(
 			closeLink = new Element("a", {id: "mbCloseLink", href: "#"}).addEvent("click", close),
 			nextLink = new Element("a", {id: "mbNextLink", href: "#"}).addEvent("click", next),
