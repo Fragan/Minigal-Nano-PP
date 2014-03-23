@@ -27,7 +27,7 @@ var Mediabox;
 	// Global variables, accessible to Mediabox only
 	var options, mediaArray, activeMedia, prevMedia, nextMedia, top, mTop, left, mLeft, winWidth, winHeight, fx, preload, preloadPrev = new Image(), preloadNext = new Image(),
 	// DOM elements
-	overlay, center, media, bottom, captionSplit, title, caption, number, prevLink, nextLink,
+	overlay, center, media, mediaLeft, mediaRight, bottom, captionSplit, title, caption, number, prevLink, nextLink,
 	// Mediabox specific vars
 	URL, WH, WHL, elrel, mediaWidth, mediaHeight, mediaType = "none", mediaSplit, mediaId = "mediaBox", margin, marginBottom;
 
@@ -43,7 +43,10 @@ var Mediabox;
 		);
 
 		container = new Element("div", {id: "mbContainer"}).inject(center, "inside");
-			media = new Element("div", {id: "mbMedia"}).inject(container, "inside");
+			media = new Element("div", {id: "mbMedia"}).inject(container, "inside").adopt(
+                mediaLeft = new Element("a", {id: "mbMediaLeft", href: "#"}).addEvent("click", previous),
+                mediaRight = new Element("a", {id: "mbMediaRight", href: "#"}).addEvent("click", next)
+            );
 		bottom = new Element("div", {id: "mbBottom"}).inject(center, "inside").adopt(
 			closeLink = new Element("a", {id: "mbCloseLink", href: "#"}).addEvent("click", close),
 			nextLink = new Element("a", {id: "mbNextLink", href: "#"}).addEvent("click", next),
@@ -339,6 +342,24 @@ var Mediabox;
 	function next() {
 		return changeMedia(nextMedia);
 	}
+
+    function setPrevNextClickEvent() {
+        var mstyles = {
+            //top: top,
+            //left: left,
+            width: mediaWidth,
+            height: mediaWidth,
+            display: ""
+        }
+
+        media.adopt( new Element("div").adopt(
+            mediaLeft = new Element("a", {id: "mbMediaLeft", href: "#"}).setStyles(mstyles).addEvent("click", previous),
+            mediaRight = new Element("a", {id: "mbMediaRight", href: "#"}).setStyles(mstyles).addEvent("click", next)
+        ));
+        
+        mediaLeft.prevLink.set('html', options.buttonText[0]);
+        mediaRight.set('html', options.buttonText[1]);
+    }
 
 	function changeMedia(mediaIndex) {
 		if (mediaIndex >= 0) {
@@ -811,7 +832,7 @@ var Mediabox;
 	function startEffect() {
 //		if (Browser.Platform.ios && (mediaType == "obj" || mediaType == "qt" || mediaType == "html")) alert("this isn't gonna work");
 //		if (Browser.Platform.ios && (mediaType == "obj" || mediaType == "qt" || mediaType == "html")) mediaType = "ios";
-		(mediaType == "img")?media.addEvent("click", next):media.removeEvent("click", next);
+		//(mediaType == "img")?media.addEvent("click", next):media.removeEvent("click", next);
 		if (mediaType == "img"){
 			mediaWidth = preload.width;
 			mediaHeight = preload.height;
@@ -897,6 +918,9 @@ var Mediabox;
 /****/	} else { center.setStyles({width: mediaWidth, height: mediaHeight, marginTop: mTop-margin, marginLeft: mLeft-margin}); mediaAnimate(); }
 //		center.setStyles({width: mediaWidth, height: mediaHeight, marginTop: mTop-margin, marginLeft: mLeft-margin});
 //		mediaAnimate();
+
+        if (mediaType == "img")
+            setPrevNextClickEvent();
 	}
 
 	function mediaAnimate() {
