@@ -349,13 +349,13 @@ var Mediabox;
             display: ""
         }
 
-        media.adopt( new Element("div").adopt(
+        mediaType.adopt(
             mediaLeft = new Element("a", {id: "mbMediaLeft", href: "#"}).setStyles(mstyles).addEvent("click", previous),
             mediaRight = new Element("a", {id: "mbMediaRight", href: "#"}).setStyles(mstyles).addEvent("click", next)
-        ));
+        );
         
-        mediaLeft.prevLink.set('html', options.buttonText[0]);
-        mediaRight.set('html', options.buttonText[1]);
+        mediaLeft.prevLink.set('html', '<big>&laquo;</big>');
+        mediaRight.set('html', '<big>&raquo;</big>');
     }
 
 	function changeMedia(mediaIndex) {
@@ -889,9 +889,10 @@ var Mediabox;
 			mediaHeight = options.defaultHeight;
 		}
 
-		title.set('html', (options.showCaption) ? captionSplit[0] : "");
-		caption.set('html', (options.showCaption && (captionSplit.length > 1)) ? captionSplit[1] : "");
-		number.set('html', (options.showCounter && (mediaArray.length > 1)) ? options.counterText.replace(/\{x\}/, (options.countBack)?mediaArray.length-activeMedia:activeMedia+1).replace(/\{y\}/, mediaArray.length) : "");
+
+        title.set('html', (options.showCaption) ? captionSplit[0] : "");
+        caption.set('html', (options.showCaption && (captionSplit.length > 1)) ? captionSplit[1] : "");
+        number.set('html', (options.showCounter && (mediaArray.length > 1)) ? options.counterText.replace(/\{x\}/, (options.countBack)?mediaArray.length-activeMedia:activeMedia+1).replace(/\{y\}/, mediaArray.length) : "");
 
 //		if (options.countBack) {
 //			number.set('html', (options.showCounter && (mediaArray.length > 1)) ? options.counterText.replace(/{x}/, activeMedia + 1).replace(/{y}/, mediaArray.length) : "");
@@ -907,14 +908,14 @@ var Mediabox;
 		bottom.setStyles({width: mediaWidth-marginBottom+"px"});
 		caption.setStyles({width: mediaWidth-marginBottom+"px"});
 
-		mediaWidth = media.offsetWidth;
-		mediaHeight = media.offsetHeight+bottom.offsetHeight;
-		if (mediaHeight >= top+top) { mTop = -top; } else { mTop = -(mediaHeight/2); }
-		if (mediaWidth >= left+left) { mLeft = -left; } else { mLeft = -(mediaWidth/2); }
-/****/	if (options.resizeOpening) { fx.resize.start({width: mediaWidth, height: mediaHeight, marginTop: mTop-margin, marginLeft: mLeft-margin});
-/****/	} else { center.setStyles({width: mediaWidth, height: mediaHeight, marginTop: mTop-margin, marginLeft: mLeft-margin}); mediaAnimate(); }
-//		center.setStyles({width: mediaWidth, height: mediaHeight, marginTop: mTop-margin, marginLeft: mLeft-margin});
-//		mediaAnimate();
+        mediaWidth = media.offsetWidth;
+        mediaHeight = media.offsetHeight+bottom.offsetHeight;
+        if (mediaHeight >= top+top) { mTop = -top; } else { mTop = -(mediaHeight/2); }
+        if (mediaWidth >= left+left) { mLeft = -left; } else { mLeft = -(mediaWidth/2); }
+/****/  if (options.resizeOpening) { fx.resize.start({width: mediaWidth, height: mediaHeight, marginTop: mTop-margin, marginLeft: mLeft-margin});
+/****/  } else { center.setStyles({width: mediaWidth, height: mediaHeight, marginTop: mTop-margin, marginLeft: mLeft-margin}); mediaAnimate(); }
+//      center.setStyles({width: mediaWidth, height: mediaHeight, marginTop: mTop-margin, marginLeft: mLeft-margin});
+//      mediaAnimate();
 
         if (mediaType == "img")
             setPrevNextClickEvent();
